@@ -10,75 +10,51 @@
 	
 	
 	<!-- 会员管理  -->
-	<action id="/vip/user/list" class="com.cp.admin.action.VipUserManagerAction" method="getVipUserPage"></action>
-	<action id="/vip/user/detail" class="com.cp.admin.action.VipUserManagerAction" method="getVipUserDetailById"></action>
-	<action id="/vip/pay/detail" class="com.cp.admin.action.VipUserManagerAction" method="getPayDetail"></action>
-	<action id="/vip/user/del" class="com.cp.admin.action.VipUserManagerAction" method="deleteVipUser"></action>
-	<action id="/vip/user/forbid" class="com.cp.admin.action.VipUserManagerAction" method="forbidVipUser"></action>
-	<action id="/vip/user/release" class="com.cp.admin.action.VipUserManagerAction" method="releaseVipUser"></action>
+	<!-- <action id="/vip/user/list" class="com.bike.admin.action.VipUserManagerAction" method="getVipUserPage"></action>
+	<action id="/vip/user/detail" class="com.bike.admin.action.VipUserManagerAction" method="getVipUserDetailById"></action>
+	<action id="/vip/pay/detail" class="com.bike.admin.action.VipUserManagerAction" method="getPayDetail"></action>
+	<action id="/vip/user/del" class="com.bike.admin.action.VipUserManagerAction" method="deleteVipUser"></action>
+	<action id="/vip/user/forbid" class="com.bike.admin.action.VipUserManagerAction" method="forbidVipUser"></action>
+	<action id="/vip/user/release" class="com.bike.admin.action.VipUserManagerAction" method="releaseVipUser"></action>
 	<action id="/vip/user/updCertification" class="com.cp.admin.action.VipUserManagerAction" method="updCertification"></action>
-	<action id="/vip/user/pay/export" class="com.cp.admin.action.VipUserManagerAction" method="exportPayInfo"></action>
-	<action id="/vip/user/export" class="com.cp.admin.action.VipUserManagerAction" method="export"></action>
-
+ -->
 	<!-- excel导出数据  -->
 	
-
-	<!-- 用户订单管理 -->
-	<action id="/order/list" class="com.cp.admin.action.UserOrderAction" method="getOrderList"></action>
-	<action id="/order/export" class="com.cp.admin.action.UserOrderAction" method="exportOrder"></action>
-	<action id="/order/cancel" class="com.cp.admin.action.UserOrderAction" method="cancelOrder"></action>
-	<action id="/order/recharge/pay" class="com.cp.admin.action.UserOrderAction" method="payOrder"></action>
-	<action id="/order/refund" class="com.cp.admin.action.UserOrderAction" method="refund"></action>
-	<action id="/order/rejectRefund" class="com.cp.admin.action.UserOrderAction" method="rejectRefund"></action>
-	<action id="/order/ticket/list" class="com.cp.admin.action.UserOrderAction" method="getOrderTicketList"></action>
-	<action id="/order/ticket/export" class="com.cp.admin.action.UserOrderAction" method="exportTicket"></action>
+	<!-- 用户管理 -->
+	<action id="/register" class="com.bike.admin.action.LoginAction" method="register"/>
+	<action id="/login" class="com.bike.admin.action.LoginAction" method="login"/>
 	
-	<action id="/login" class="com.cp.admin.action.LoginAction" method="login"/>
 
-	<!-- 广告图片上传 -->
-	<action id="/pic/banner/upload" class="com.cp.admin.action.PicAction" method="uploadBannerPic" />
-	<!-- 启动页图片上传 -->
-	<action id="/pic/launcher/upload" class="com.cp.admin.action.PicAction" method="uploadLauncherPic" />
-	
 	<!-- 后台账号管理 -->
-	<action id="/admin/user/list" class="com.cp.admin.action.AdminUserAction" method="adminUserList"/>
-	<action id="/admin/user/add" class="com.cp.admin.action.AdminUserAction" method="addAdminUser"/>
-	<action id="/admin/user/update" class="com.cp.admin.action.AdminUserAction" method="modifyAdminUser"/>
-	<action id="/admin/user/del" class="com.cp.admin.action.AdminUserAction" method="deleteAdminUser"/>
-	<action id="/admin/user/forbid" class="com.cp.admin.action.AdminUserAction" method="forbidAdminUser"/>
-	<action id="/admin/user/reuse" class="com.cp.admin.action.AdminUserAction" method="reuseAdminUser"/>
-	<action id="/admin/user/export" class="com.cp.admin.action.AdminUserAction" method="export"/>
+	<action id="/admin/user/list" class="com.bike.admin.action.AdminUserAction" method="adminUserList"/>
+	<action id="/admin/user/add" class="com.bike.admin.action.AdminUserAction" method="addAdminUser"/>
+	<action id="/admin/user/update" class="com.bike.admin.action.AdminUserAction" method="modifyAdminUser"/>
+	<action id="/admin/user/del" class="com.bike.admin.action.AdminUserAction" method="deleteAdminUser"/>
+	<action id="/admin/user/forbid" class="com.bike.admin.action.AdminUserAction" method="forbidAdminUser"/>
+	<action id="/admin/user/reuse" class="com.bike.admin.action.AdminUserAction" method="reuseAdminUser"/>
 	
-	<!-- 广告栏管理 -->
-    <action id="/banner/list" class="com.cp.admin.action.BannerAction" method="getList"/>
-	<action id="/banner/add" class="com.cp.admin.action.BannerAction" method="add"/>
-	<action id="/banner/update" class="com.cp.admin.action.BannerAction" method="edit"/>
-	<action id="/banner/del" class="com.cp.admin.action.BannerAction" method="delete"/>
-	<action id="/banner/online" class="com.cp.admin.action.BannerAction" method="online"/>
-	<action id="/banner/offline" class="com.cp.admin.action.BannerAction" method="offline"/>  
-	<action id="/banner/export" class="com.cp.admin.action.BannerAction" method="export"/>  
+	<!-- 使用者用户管理 -->
+	<action id="user/list" class="com.bike.admin.action.UserAction" method="userList"/>
+	<action id="user/add" class="com.bike.admin.action.UserAction" method="addUser"/>
+	<action id="user/update" class="com.bike.admin.action.UserAction" method="modifyUser"/>
+	<action id="user/del" class="com.bike.admin.action.UserAction" method="deleteUser"/>
+	
+	<!-- 站点管理 -->
+	<action id="/site/list" class="com.bike.admin.action.SiteAction" method="siteList"/>
+	<action id="/site/add" class="com.bike.admin.action.SiteAction" method="addSite"/>
+	<action id="/site/update" class="com.bike.admin.action.SiteAction" method="modifySite"/>
+	<action id="/site/del" class="com.bike.admin.action.SiteAction" method="deleteSite"/>
+	
+	<!-- 车辆管理 -->
+	<action id="/bike/list" class="com.bike.admin.action.BikeAction" method="bikeList"/>
+	<action id="/bike/add" class="com.bike.admin.action.BikeAction" method="addBike"/>
+	<action id="/bike/update" class="com.bike.admin.action.BikeAction" method="modifyBike"/>
+	<action id="/bike/del" class="com.bike.admin.action.BikeAction" method="deleteBike"/>
+	
+	<!-- 用户订单管理 -->
+	<!-- <action id="/order/list" class="com.bike.admin.action.UserOrderAction" method="getOrderList"></action>
+	<action id="/order/del" class="com.bike.admin.action.UserOrderAction" method="deleteOrder"></action>
+	<action id="/order/recharge/pay" class="com.bike.admin.action.UserOrderAction" method="payOrder"></action> -->
 
-	<!-- 启动页管理 -->
-	<action id="/launcher/pic/list" class="com.cp.admin.action.LauncherPicAction" method="getList"/>
-	<action id="/launcher/pic/add" class="com.cp.admin.action.LauncherPicAction" method="add"/>
-	<action id="/launcher/pic/update" class="com.cp.admin.action.LauncherPicAction" method="edit"/>
-	<action id="/launcher/pic/del" class="com.cp.admin.action.LauncherPicAction" method="delete"/>
-	<action id="/launcher/pic/online" class="com.cp.admin.action.LauncherPicAction" method="online"/>
-	<action id="/launcher/pic/offline" class="com.cp.admin.action.LauncherPicAction" method="offline"/>
-	<action id="/launcher/pic/export" class="com.cp.admin.action.LauncherPicAction" method="export"/>
 	
-	<!-- PK10期程开奖派奖 -->
-	<action id="/pk10/match/list" class="com.cp.admin.action.PK10MatchAction" method="matchList" /> 
-	<action id="/pk10/match/handaward" class="com.cp.admin.action.PK10MatchAction" method="handAward" /> 
-	<action id="/pk10/match/award/list" class="com.cp.admin.action.PK10MatchAction" method="userAwardList" /> 
-	<action id="/pk10/match/ticket/award" class="com.cp.admin.action.PK10MatchAction" method="award" />
-	<action id="/pk10/match/list/export" class="com.cp.admin.action.PK10MatchAction" method="export" />
-	 
-	<!-- 提现记录 -->
-	<action id="/withdraw/list" class="com.cp.admin.action.WithdrawAction" method="getList" /> 
-	<action id="/withdraw/applied" class="com.cp.admin.action.WithdrawAction" method="applied" /> 
-	<action id="/withdraw/reauto" class="com.cp.admin.action.WithdrawAction" method="reAutoWithdraw" /> 
-	<action id="/withdraw/hand" class="com.cp.admin.action.WithdrawAction" method="handWithdraw" /> 
-	<action id="/withdraw/reject" class="com.cp.admin.action.WithdrawAction" method="reject" /> 
-	<action id="/withdraw/export" class="com.cp.admin.action.WithdrawAction" method="export" /> 
 </MvcHost>

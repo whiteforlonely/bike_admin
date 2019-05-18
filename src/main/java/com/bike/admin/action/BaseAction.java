@@ -2,7 +2,10 @@ package com.bike.admin.action;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -10,6 +13,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -19,8 +23,6 @@ import org.apache.commons.lang.StringUtils;
 import com.bike.admin.util.CookieUtil;
 import com.bike.admin.util.EncryUtil;
 import com.framework.action.http.HttpClient;
-import com.framework.action.session.WebSessionManager;
-import com.framework.action.session.model.WebSessionUser;
 
 /**
  * 基础action
@@ -29,9 +31,10 @@ public abstract class BaseAction {
 	
 	protected HttpServletRequest request;
 	protected HttpServletResponse response;
-	protected WebSessionUser sessionUser = null;
+	protected HttpSession sessionUser = null;
 	protected int loginUid;
 	protected String userName;
+	protected int userType;	// 0=用户， 1=管理员
 	
 	private static Lock requestLock = new ReentrantLock();
 
@@ -51,10 +54,23 @@ public abstract class BaseAction {
 	}
 
 	protected void initParams(){
-		sessionUser = WebSessionManager.getSessionUser(request);
+		sessionUser = request.getSession();
 		if(sessionUser != null) {
-			loginUid = sessionUser.getUserId();
-			userName = sessionUser.getUserName();
+			@SuppressWarnings("unchecked")
+			Enumeration<String> enums = sessionUser.getAttributeNames();
+			List<String> list = new ArrayList<String>();
+			while (enums.hasMoreElements()) {
+				list.add(enums.nextElement());
+			}
+			if (list.contains("uid")) {
+				loginUid = (int) sessionUser.getAttribute("uid");				
+			}
+			if (list.contains("userName")) {
+				userName = (String) sessionUser.getAttribute("userName");				
+			}
+			if (list.contains("userType")) {
+				userType = (int) sessionUser.getAttribute("userType");				
+			}
 		}
 	}
 

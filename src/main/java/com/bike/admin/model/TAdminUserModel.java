@@ -1,7 +1,6 @@
 package com.bike.admin.model;
 
 import java.io.Serializable;
-import java.sql.ResultSet;
 import java.util.Date;
 
 /**

@@ -1,11 +1,11 @@
 <dbconfig>
 	<connection name="database_rw">
 		<type value="C3P0" />
-		<host value="10.0.0.37" />
+		<host value="localhost" />
 		<port value="3306" />
 		<user value="root" />
-		<password value="!@#WR1024zxc~" />
-		<db value="caipiao" />
+		<password value="meilan1126" />
+		<db value="bike" />
 		<maxPoolSize value="100" />
 		<maxConnectionAge value="14400" />
 		<minPoolSize value="5" />
@@ -20,11 +20,11 @@
 
 	<connection name="database_r">
 		<type value="C3P0" />
-		<host value="10.0.0.37" />
+		<host value="localhost" />
 		<port value="3306" />
 		<user value="root" />
-		<password value="!@#WR1024zxc~" />
-		<db value="caipiao" />
+		<password value="meilan1126" />
+		<db value="bike" />
 		<maxPoolSize value="100" />
 		<maxConnectionAge value="14400" />
 		<minPoolSize value="5" />

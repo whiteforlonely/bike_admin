@@ -601,7 +601,7 @@ public class TimeUtils {
 		if (hour >= 1 && hour <= 8) {
 			isMidnight = true;
 		}
-		return false;
+		return isMidnight;
 	}
 
 	/**
@@ -800,7 +800,6 @@ public class TimeUtils {
 				String[] items = period.split(":", -1);	// 1:1700:1900
 				int weekNum = Integer.valueOf(items[0]);
 				String startTime = items[1];
-				String endTime = items[2];
 				Date tmpDate = getNearestWeekNumDate(weekNum, startTime);
 				if(!tmpDate.before(firstCleanTime)){
 					mutilActualCleanTime.add(dateToString(tmpDate));

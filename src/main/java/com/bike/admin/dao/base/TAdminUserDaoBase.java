@@ -1,19 +1,25 @@
 package com.bike.admin.dao.base;
 
-import java.util.*;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
-import com.xstardl.xf.xchine_dbo_mysql.xsql.DBEngine;
-import com.xstardl.xf.xchine_dbo_mysql.xsql.DBFactory;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.sql.rowset.CachedRowSet;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import com.bike.admin.model.TAdminUserModel;
+import com.constants.DatabaseConstants;
+import com.systemframework.dao.HqlQueryRule;
 import com.systemframework.util.Page;
 import com.systemframework.util.PageUtil;
-import com.systemframework.dao.HqlQueryRule;
-import  javax.sql.rowset.CachedRowSet;
-import  org.apache.commons.lang.StringUtils;
-import  com.constants.DatabaseConstants;
-import com.bike.admin.model.TAdminUserModel;
+import com.xstardl.xf.xchine_dbo_mysql.xsql.DBEngine;
+import com.xstardl.xf.xchine_dbo_mysql.xsql.DBFactory;
 
 /**
  * 这是t_admin_user的Dao实现类的基类

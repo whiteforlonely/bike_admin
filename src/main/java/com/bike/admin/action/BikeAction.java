@@ -75,7 +75,7 @@ public class BikeAction extends BaseAction{
 		}
 	}
 	
-	public void modifyAdminUser() {
+	public void modifyBike() {
 		int id = ParameterUtil.getIntParameter(request, "id", 0);
 		double bikeAmount = ParameterUtil.getDoubleParameter(request, "bikeAmount", 0);
 		String color = ParameterUtil.getStringParameter(request, "color", "");
