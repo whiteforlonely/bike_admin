@@ -1,9 +1,12 @@
 package com.bike.admin.dao;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.rowset.CachedRowSet;
+
+import org.apache.commons.lang.StringUtils;
 
 import com.bike.admin.dao.base.TBikeDaoBase;
 import com.bike.admin.model.TBikeModel;
@@ -76,6 +79,7 @@ public class TBikeDao extends TBikeDaoBase   {
     	
     	return null;
 	}
+
     
     /*************************** update方法 ***********************************
      *                          请把update方法写在下面
@@ -90,6 +94,103 @@ public class TBikeDao extends TBikeDaoBase   {
     /*************************** get方法 **************************************
      *                          请把get方法写在下面
      *************************************************************************/
+	public List<TBikeModel> findList(TBikeModel model, int start, int length) {
+		StringBuilder sqlBuilder = new StringBuilder("SELECT " + ALLCOL + " FROM " + TABLE +" WHERE 1=1");
+		List<Object> paramList = new ArrayList<Object>();
+		if (null != model) {
+			if (null != model.getId() && model.getId().intValue() > 0) {
+				sqlBuilder.append(" and id = ?");
+				paramList.add(model.getId());
+			}
+			if (null != model.getUserId() && model.getUserId().intValue() > 0) {
+				sqlBuilder.append(" and userId = ?");
+				paramList.add(model.getUserId());
+			}
+			if (null != model.getSiteId() && model.getSiteId().intValue() > 0) {
+				sqlBuilder.append(" and siteId = ?");
+				paramList.add(model.getSiteId());
+			}
+			if (StringUtils.isNotEmpty(model.getBikeCode())) {
+				sqlBuilder.append(" and bikeCode = ?");
+				paramList.add(model.getBikeCode());
+			}
+			if (null != model.getStatus() && model.getStatus().intValue() >= 0) {
+				sqlBuilder.append(" and status = ?");
+				paramList.add(model.getStatus());
+			}
+			if (StringUtils.isNotEmpty(model.getColor())) {
+				sqlBuilder.append(" and color = ?");
+				paramList.add(model.getColor());
+			}
+		}
+		
+		sqlBuilder.append(" order by createTime desc limit ?, ?");
+		paramList.add(start);
+		paramList.add(length);
+		
+		Object[] paramObjects = new Object[paramList.size()];
+		for (int i = 0; i < paramObjects.length; i++) {
+			paramObjects[i] = paramList.get(i);
+		}
+		
+		return queryModelList(sqlBuilder.toString(), paramObjects);
+	}
+
+	@SuppressWarnings("deprecation")
+	public int getCount(TBikeModel model) {
+		StringBuilder sqlBuilder = new StringBuilder("SELECT count(1) FROM " + TABLE +" WHERE 1=1");
+		List<Object> paramList = new ArrayList<Object>();
+		if (null != model) {
+			if (null != model.getId() && model.getId().intValue() > 0) {
+				sqlBuilder.append(" and id = ?");
+				paramList.add(model.getId());
+			}
+			if (null != model.getUserId() && model.getUserId().intValue() > 0) {
+				sqlBuilder.append(" and userId = ?");
+				paramList.add(model.getUserId());
+			}
+			if (null != model.getSiteId() && model.getSiteId().intValue() > 0) {
+				sqlBuilder.append(" and siteId = ?");
+				paramList.add(model.getSiteId());
+			}
+			if (StringUtils.isNotEmpty(model.getBikeCode())) {
+				sqlBuilder.append(" and bikeCode = ?");
+				paramList.add(model.getBikeCode());
+			}
+			if (null != model.getStatus() && model.getStatus().intValue() >= 0) {
+				sqlBuilder.append(" and status = ?");
+				paramList.add(model.getStatus());
+			}
+			if (StringUtils.isNotEmpty(model.getColor())) {
+				sqlBuilder.append(" and color = ?");
+				paramList.add(model.getColor());
+			}
+		}
+		
+		Object[] paramObjects = new Object[paramList.size()];
+		for (int i = 0; i < paramObjects.length; i++) {
+			paramObjects[i] = paramList.get(i);
+		}
+		
+		CachedRowSet rs = null;
+		try {
+			rs = writeDBEngine.executeQuery(sqlBuilder.toString(), paramObjects);
+			if (rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (null != rs) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return 0;
+	}
     
     
 }

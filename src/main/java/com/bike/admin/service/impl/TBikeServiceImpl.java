@@ -135,5 +135,13 @@ public  class TBikeServiceImpl implements  TBikeService {
      *                          请把get方法写在下面
      *************************************************************************/
     
+    @Override
+    public List<TBikeDTO> getList(TBikeDTO dto, int start, int length) {
+    	return DtoConvert.convertModelList2DtoList(tBikeDao.findList(DtoConvert.convertDto2Model(dto, TBikeModel.class), start, length), TBikeDTO.class); 
+    }
     
+    @Override
+    public int getCount(TBikeDTO dto) {
+    	return tBikeDao.getCount(DtoConvert.convertDto2Model(dto, TBikeModel.class));
+    }
 }

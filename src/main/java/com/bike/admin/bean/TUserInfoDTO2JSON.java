@@ -6,6 +6,7 @@ import net.sf.json.processors.JsonBeanProcessor;
 
 import com.bike.admin.dto.TUserInfoDTO;
 import com.bike.admin.util.EncryUtil;
+import com.bike.admin.util.TimeUtils;
 
 public class TUserInfoDTO2JSON implements JsonBeanProcessor{
 	
@@ -16,14 +17,17 @@ public class TUserInfoDTO2JSON implements JsonBeanProcessor{
         TUserInfoDTO  dto = (TUserInfoDTO)bean;
 
          return new JSONObject()
+         			.element("id", dto.getId())
                     .element("userType",dto.getUserType())
-                    .element("userSex",dto.getUserSex())
+                    .element("sex",dto.getSex())
                     .element("userName", dto.getUserName())
-                    .element("mobilephone",dto.getPhoneNum())
+                    .element("phoneNum",dto.getPhoneNum())
                     .element("password",EncryUtil.decode(dto.getPassword()))
                     .element("identityCard",dto.getIdentityCard())
                     .element("amount",dto.getAmount())
-                    .element("createTime", dto.getCreateTime())
+                    .element("createTime", TimeUtils.dateToString(dto.getCreateTime()))
+                    .element("status", dto.getStatus())
+                    .element("address", dto.getAddress())
          ;
     }
 

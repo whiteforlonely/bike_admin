@@ -16,6 +16,11 @@ public  class TSiteModel  implements Serializable {
      */
     private Integer id = 0;
     /**
+     * 属性:站点名称<br>
+     * 含义:站点名称<br>
+     */
+    private String name = "";
+    /**
      * 属性:用户ID<br>
      * 含义:用户ID<br>
      */
@@ -63,6 +68,24 @@ public  class TSiteModel  implements Serializable {
      */
     public Integer getId() {
         return id;
+    }
+
+    /**
+     * 设置属性站点名称<br>
+     * 含义:站点名称<br>
+     * @param name 待设置的属性站点名称的值
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * 获取属性站点名称<br>
+     * 含义:站点名称<br>
+     * @return 属性站点名称的值
+     */
+    public String getName() {
+        return name;
     }
 
     /**
@@ -190,6 +213,8 @@ public  class TSiteModel  implements Serializable {
         StringBuffer sb = new StringBuffer(); 
         sb.append("{"); 
         sb.append("\"id\":"+this.getId());
+        sb.append(",");
+        sb.append("\"name\":\""+this.getName()+"\"");
         sb.append(",");
         sb.append("\"userId\":"+this.getUserId());
         sb.append(",");

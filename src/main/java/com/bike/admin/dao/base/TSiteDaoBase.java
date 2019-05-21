@@ -40,7 +40,7 @@ public  abstract class TSiteDaoBase {
     /**
      * 所有的字段,','隔开 
      */
-    protected static final String ALLCOL = " Id,UserId,SiteSize,SitePosition,BikeQuantity,CreateTime ";
+    protected static final String ALLCOL = " Id,Name,UserId,SiteSize,SitePosition,BikeQuantity,CreateTime ";
 
     protected static final String BASE_SQL = " SELECT " + ALLCOL + " FROM " + TABLE + " ";
 
@@ -62,6 +62,9 @@ public  abstract class TSiteDaoBase {
 						String columnName = metaData.getColumnName(i);
 						if(StringUtils.equalsIgnoreCase("id",columnName)){
 							model.setId(rs.getInt(columnName));
+						}
+						else if(StringUtils.equalsIgnoreCase("name",columnName)){
+               				model.setName(rs.getString(columnName));
 						}
 						else if(StringUtils.equalsIgnoreCase("userId",columnName)){
 							model.setUserId(rs.getInt(columnName));
@@ -93,8 +96,8 @@ public  abstract class TSiteDaoBase {
      */
     public int insert(TSiteModel model) {
         DBEngine localEngine = DBFactory.getKeepConnectionDBEngine(DatabaseConstants.MAIN_DB_RW);
-        String sql = "INSERT INTO " + TABLE + " (UserId,SiteSize,SitePosition,BikeQuantity,CreateTime) VALUES (?,?,?,?,?)";
-        Object[]  paramObj = {model.getUserId(),model.getSiteSize(),model.getSitePosition(),model.getBikeQuantity(),model.getCreateTime()};
+        String sql = "INSERT INTO " + TABLE + " (Name,UserId,SiteSize,SitePosition,BikeQuantity,CreateTime) VALUES (?,?,?,?,?,?)";
+        Object[]  paramObj = {model.getName(),model.getUserId(),model.getSiteSize(),model.getSitePosition(),model.getBikeQuantity(),model.getCreateTime()};
         int id=0;
         try {
              id = localEngine.executeUpdate(sql, paramObj);
@@ -116,8 +119,8 @@ public  abstract class TSiteDaoBase {
      * @return 修改成功返回true,否则返回false
      */
     public boolean update(TSiteModel model) {
-        String sql = "UPDATE  " + TABLE + " SET UserId = ? ,SiteSize = ? ,SitePosition = ? ,BikeQuantity = ? ,CreateTime = ?  WHERE Id = ? ";
-        Object[]  paramObj = {model.getUserId(),model.getSiteSize(),model.getSitePosition(),model.getBikeQuantity(),model.getCreateTime(),model.getId()};
+        String sql = "UPDATE  " + TABLE + " SET Name = ? ,UserId = ? ,SiteSize = ? ,SitePosition = ? ,BikeQuantity = ? ,CreateTime = ?  WHERE Id = ? ";
+        Object[]  paramObj = {model.getName(),model.getUserId(),model.getSiteSize(),model.getSitePosition(),model.getBikeQuantity(),model.getCreateTime(),model.getId()};
         try {
              return writeDBEngine.executeUpdate(sql, paramObj)>0;
         } catch(Exception e) {

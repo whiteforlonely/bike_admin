@@ -51,8 +51,8 @@ public  class TBikeDTOBase  implements Serializable {
      * 属性:使用状态：1=使用中；2=未使用；3=车辆故障；<br>
      * 含义:使用状态：1=使用中；2=未使用；3=车辆故障；<br>
      */
-     @Field(name="statu")
-    private Integer statu = 0;
+     @Field(name="status")
+    private Integer status = 0;
     /**
      * 属性:车辆所属位置<br>
      * 含义:车辆所属位置<br>
@@ -201,10 +201,10 @@ public  class TBikeDTOBase  implements Serializable {
     /**
      * 设置属性使用状态：1=使用中；2=未使用；3=车辆故障；<br>
      * 含义:使用状态：1=使用中；2=未使用；3=车辆故障；<br>
-     * @param statu 待设置的属性使用状态：1=使用中；2=未使用；3=车辆故障；的值
+     * @param status 待设置的属性使用状态：1=使用中；2=未使用；3=车辆故障；的值
      */
-    public void setStatu(Integer statu) {
-        this.statu = statu;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     /**
@@ -212,8 +212,8 @@ public  class TBikeDTOBase  implements Serializable {
      * 含义:使用状态：1=使用中；2=未使用；3=车辆故障；<br>
      * @return 属性使用状态：1=使用中；2=未使用；3=车辆故障；的值
      */
-    public Integer getStatu() {
-        return statu;
+    public Integer getStatus() {
+        return status;
     }
 
     /**
@@ -352,7 +352,7 @@ public  class TBikeDTOBase  implements Serializable {
         sb.append(",");
         sb.append("\"color\":\""+this.getColor()+"\"");
         sb.append(",");
-        sb.append("\"statu\":"+this.getStatu());
+        sb.append("\"status\":"+this.getStatus());
         sb.append(",");
         sb.append("\"position\":\""+this.getPosition()+"\"");
         sb.append(",");

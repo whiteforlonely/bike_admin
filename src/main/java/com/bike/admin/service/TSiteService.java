@@ -71,10 +71,6 @@ public  interface TSiteService  {
    	public int updateStatus(int id, int i);
 
 
-//   	public boolean isPhoneExists(String mobilePhone);
-//   	
-//   	public boolean isPhoneExists(String mobilePhone, int adminUserId);
-    
     /*************************** update方法 ***********************************
      *                          请把update方法写在下面
      *************************************************************************/
@@ -89,5 +85,8 @@ public  interface TSiteService  {
      *                          请把get方法写在下面
      *************************************************************************/
     
-    
+   	public List<TSiteDTO> getList(TSiteDTO dto, int start, int length);
+
+
+	public int getCount(TSiteDTO dto);
 }

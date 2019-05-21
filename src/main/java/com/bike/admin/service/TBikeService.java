@@ -67,6 +67,8 @@ public  interface TBikeService  {
 	public int getCount();
 	
 	public TBikeDTO getBikeByUserId(int userId);
+
+
     
     /*************************** update方法 ***********************************
      *                          请把update方法写在下面
@@ -81,6 +83,10 @@ public  interface TBikeService  {
     /*************************** get方法 *************************************
      *                          请把get方法写在下面
      *************************************************************************/
+	public List<TBikeDTO> getList(TBikeDTO dto, int start, int length);
+
+
+	public int getCount(TBikeDTO dto);
     
     
 }

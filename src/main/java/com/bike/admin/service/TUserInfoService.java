@@ -70,6 +70,8 @@ public  interface TUserInfoService  {
 	public boolean isPhoneExists(String mobilePhone);
 	
 	public boolean isPhoneExists(String mobilePhone, int adminUserId);
+
+
     
     /*************************** update方法 ***********************************
      *                          请把update方法写在下面
@@ -85,5 +87,11 @@ public  interface TUserInfoService  {
      *                          请把get方法写在下面
      *************************************************************************/
     
+	public List<TUserInfoDTO> getList(TUserInfoDTO dto, int start, int length,
+			String startCreateTime, String endCreateTime);
+
+
+	public int getCount(TUserInfoDTO dto, String startCreateTime,
+			String endCreateTime);
     
 }

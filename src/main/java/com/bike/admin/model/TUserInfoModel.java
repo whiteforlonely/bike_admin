@@ -1,7 +1,6 @@
 package com.bike.admin.model;
 
 import java.io.Serializable;
-import java.sql.ResultSet;
 import java.util.Date;
 
 /**
@@ -16,15 +15,15 @@ public  class TUserInfoModel  implements Serializable {
      */
     private Integer id = 0;
     /**
-     * 属性:用户类型：1=发布者；2=使用者<br>
-     * 含义:用户类型：1=发布者；2=使用者<br>
+     * 属性:用户类型<br>
+     * 含义:用户类型<br>
      */
     private Integer userType = 0;
     /**
      * 属性:用户性别：1=男；2=女<br>
      * 含义:用户性别：1=男；2=女<br>
      */
-    private Integer userSex = 0;
+    private Integer sex = 0;
     /**
      * 属性:用户名<br>
      * 含义:用户名<br>
@@ -46,6 +45,11 @@ public  class TUserInfoModel  implements Serializable {
      */
     private String identityCard = "";
     /**
+     * 属性:所在地<br>
+     * 含义:所在地<br>
+     */
+    private String address = "";
+    /**
      * 属性:用户账号余额<br>
      * 含义:用户账号余额<br>
      */
@@ -55,6 +59,11 @@ public  class TUserInfoModel  implements Serializable {
      * 含义:用户注册时间<br>
      */
     private Date createTime = new Date();
+    /**
+     * 属性:状态<br>
+     * 含义:状态<br>
+     */
+    private Integer status = 0;
 
     /**
      *  默认构造方法,构造一个默认的TUserInfoModel对象
@@ -81,18 +90,18 @@ public  class TUserInfoModel  implements Serializable {
     }
 
     /**
-     * 设置属性用户类型：1=发布者；2=使用者<br>
-     * 含义:用户类型：1=发布者；2=使用者<br>
-     * @param userType 待设置的属性用户类型：1=发布者；2=使用者的值
+     * 设置属性用户类型<br>
+     * 含义:用户类型<br>
+     * @param userType 待设置的属性用户类型的值
      */
     public void setUserType(Integer userType) {
         this.userType = userType;
     }
 
     /**
-     * 获取属性用户类型：1=发布者；2=使用者<br>
-     * 含义:用户类型：1=发布者；2=使用者<br>
-     * @return 属性用户类型：1=发布者；2=使用者的值
+     * 获取属性用户类型<br>
+     * 含义:用户类型<br>
+     * @return 属性用户类型的值
      */
     public Integer getUserType() {
         return userType;
@@ -101,10 +110,10 @@ public  class TUserInfoModel  implements Serializable {
     /**
      * 设置属性用户性别：1=男；2=女<br>
      * 含义:用户性别：1=男；2=女<br>
-     * @param userSex 待设置的属性用户性别：1=男；2=女的值
+     * @param sex 待设置的属性用户性别：1=男；2=女的值
      */
-    public void setUserSex(Integer userSex) {
-        this.userSex = userSex;
+    public void setSex(Integer sex) {
+        this.sex = sex;
     }
 
     /**
@@ -112,8 +121,8 @@ public  class TUserInfoModel  implements Serializable {
      * 含义:用户性别：1=男；2=女<br>
      * @return 属性用户性别：1=男；2=女的值
      */
-    public Integer getUserSex() {
-        return userSex;
+    public Integer getSex() {
+        return sex;
     }
 
     /**
@@ -189,6 +198,24 @@ public  class TUserInfoModel  implements Serializable {
     }
 
     /**
+     * 设置属性所在地<br>
+     * 含义:所在地<br>
+     * @param address 待设置的属性所在地的值
+     */
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    /**
+     * 获取属性所在地<br>
+     * 含义:所在地<br>
+     * @return 属性所在地的值
+     */
+    public String getAddress() {
+        return address;
+    }
+
+    /**
      * 设置属性用户账号余额<br>
      * 含义:用户账号余额<br>
      * @param amount 待设置的属性用户账号余额的值
@@ -222,6 +249,24 @@ public  class TUserInfoModel  implements Serializable {
      */
     public Date getCreateTime() {
         return createTime;
+    }
+
+    /**
+     * 设置属性状态<br>
+     * 含义:状态<br>
+     * @param status 待设置的属性状态的值
+     */
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    /**
+     * 获取属性状态<br>
+     * 含义:状态<br>
+     * @return 属性状态的值
+     */
+    public Integer getStatus() {
+        return status;
     }
 
 
@@ -262,7 +307,7 @@ public  class TUserInfoModel  implements Serializable {
         sb.append(",");
         sb.append("\"userType\":"+this.getUserType());
         sb.append(",");
-        sb.append("\"userSex\":"+this.getUserSex());
+        sb.append("\"sex\":"+this.getSex());
         sb.append(",");
         sb.append("\"userName\":\""+this.getUserName()+"\"");
         sb.append(",");
@@ -272,9 +317,13 @@ public  class TUserInfoModel  implements Serializable {
         sb.append(",");
         sb.append("\"identityCard\":\""+this.getIdentityCard()+"\"");
         sb.append(",");
+        sb.append("\"address\":\""+this.getAddress()+"\"");
+        sb.append(",");
         sb.append("\"amount\":"+this.getAmount());
         sb.append(",");
         sb.append("\"createTime\":\""+this.getCreateTime()+"\"");
+        sb.append(",");
+        sb.append("\"status\":"+this.getStatus());
         sb.append("}"); 
         return sb.toString(); 
     }

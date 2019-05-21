@@ -10,11 +10,8 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
 
-import com.bike.admin.bean.AdminUser2JSON;
 import com.bike.admin.bean.TUserInfoDTO2JSON;
-import com.bike.admin.dto.TAdminUserDTO;
 import com.bike.admin.dto.TUserInfoDTO;
-import com.bike.admin.enums.AdminUserStatusEnum;
 import com.bike.admin.service.TUserInfoService;
 import com.bike.admin.service.base.AdminServiceManager;
 import com.bike.admin.util.EncryUtil;
@@ -35,9 +32,23 @@ public class UserAction extends BaseAction {
 	public void userList() {
 		int start = ParameterUtil.getIntParameter(request, "start", 0);
 		int length = ParameterUtil.getIntParameter(request, "length", 20);
+		//性别，名称，手机号，身份证号，注册时间
+		int sex = ParameterUtil.getIntParameter(request, "sex", 0);
+		int id = ParameterUtil.getIntParameter(request, "id", 0);
+		String userName = ParameterUtil.getStringParameter(request, "userName", "");
+		String phoneNum = ParameterUtil.getStringParameter(request, "phoneNum", "");
+		String idCard = ParameterUtil.getStringParameter(request, "identityCard", "");
+		String startCreateTime = ParameterUtil.getStringParameter(request, "createTimeStart", "");
+		String endCreateTime = ParameterUtil.getStringParameter(request, "createTimeEnd", "");
 
-		List<TUserInfoDTO> list = tUserInfoService.getPage(start, length);
-		int totalCount = tUserInfoService.getCount();
+		TUserInfoDTO dto = new TUserInfoDTO();
+		dto.setId(id);
+		dto.setSex(sex);
+		dto.setUserName(userName);
+		dto.setPhoneNum(phoneNum);
+		dto.setIdentityCard(idCard);
+		List<TUserInfoDTO> list = tUserInfoService.getList(dto, start, length, startCreateTime, endCreateTime);
+		int totalCount = tUserInfoService.getCount(dto, startCreateTime, endCreateTime);
 		JSONObject json = new JSONObject();
 		if (totalCount == 0) {
 			json.put("total", 0);
@@ -53,11 +64,12 @@ public class UserAction extends BaseAction {
 	}
 	
 	public void addUser() {
-		String nickname = ParameterUtil.getStringParameter(request, "nickname", "匿名");
-		String mobilePhone = ParameterUtil.getStringParameter(request, "mobilephone", "");
+		String nickname = ParameterUtil.getStringParameter(request, "userName", "匿名");
+		String mobilePhone = ParameterUtil.getStringParameter(request, "phoneNum", "");
 		String password = ParameterUtil.getStringParameter(request, "password", "");
 		String identityCard = ParameterUtil.getStringParameter(request, "identityCard", "");
-		int userSex = ParameterUtil.getIntParameter(request, "userSex", 1);
+		String address = ParameterUtil.getStringParameter(request, "address", "");
+		int userSex = ParameterUtil.getIntParameter(request, "sex", 1);
 
 		if (mobilePhone.isEmpty()) {
 			this.sendFailMsg("手机不为空！");
@@ -74,7 +86,8 @@ public class UserAction extends BaseAction {
 		dto.setUserName(nickname);
 		dto.setPhoneNum(mobilePhone);
 		dto.setPassword(EncryUtil.encode(password));
-		dto.setUserSex(userSex);
+		dto.setSex(userSex);
+		dto.setAddress(address);
 		dto.setIdentityCard(identityCard);
 		dto.setCreateTime(new Date());
 
@@ -89,11 +102,12 @@ public class UserAction extends BaseAction {
 	
 	public void modifyUser() {
 		int id = ParameterUtil.getIntParameter(request, "id", 0);
-		String nickname = ParameterUtil.getStringParameter(request, "nickname", "匿名");
-		String mobilePhone = ParameterUtil.getStringParameter(request, "mobilephone", "");
+		String nickname = ParameterUtil.getStringParameter(request, "userName", "匿名");
+		String mobilePhone = ParameterUtil.getStringParameter(request, "phoneNum", "");
 		String password = ParameterUtil.getStringParameter(request, "password", "");
 		String identityCard = ParameterUtil.getStringParameter(request, "identityCard", "");
-		int userSex = ParameterUtil.getIntParameter(request, "userSex", 1);
+		String address = ParameterUtil.getStringParameter(request, "address", "");
+		int sex = ParameterUtil.getIntParameter(request, "sex", 0);
 
 		if (id <= 0) {
 			this.sendFailMsg("错误ID！");
@@ -120,13 +134,13 @@ public class UserAction extends BaseAction {
 		dto.setUserName(nickname);
 		dto.setPhoneNum(mobilePhone);
 		dto.setPassword(EncryUtil.encode(password));
+		dto.setSex(sex);
+		dto.setAddress(address);
 		if(!identityCard.equals("")){
 			dto.setIdentityCard(identityCard);
 		}
 		
-
 		boolean result = tUserInfoService.updateTUserInfo(dto);
-
 		if (result) {
 			this.sendSuccessMsg("修改成功！");
 		} else {

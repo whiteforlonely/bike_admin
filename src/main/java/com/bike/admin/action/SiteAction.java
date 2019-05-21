@@ -31,9 +31,17 @@ public class SiteAction extends BaseAction {
 	public void siteList(){
 		int start = ParameterUtil.getIntParameter(request, "start", 0);
 		int length = ParameterUtil.getIntParameter(request, "length", 20);
+		String name = ParameterUtil.getStringParameter(request, "name", "");
+		int id = ParameterUtil.getIntParameter(request, "id", 0);
+		int userId = ParameterUtil.getIntParameter(request, "userId", 0);
+		
+		TSiteDTO dto = new TSiteDTO();
+		dto.setId(id);
+		dto.setName(name);
+		dto.setUserId(userId);
 
-		List<TSiteDTO> list = tSiteService.getPage(start, length);
-		int totalCount = tSiteService.getCount();
+		List<TSiteDTO> list = tSiteService.getList(dto, start, length);
+		int totalCount = tSiteService.getCount(dto);
 		JSONObject json = new JSONObject();
 		if (totalCount == 0) {
 			json.put("total", 0);
@@ -50,12 +58,14 @@ public class SiteAction extends BaseAction {
 	
 	public void addSite() {
 		int userId= ParameterUtil.getIntParameter(request, "userId", 0);
+		String name = ParameterUtil.getStringParameter(request, "name", "");
 		int bikeQuantity= ParameterUtil.getIntParameter(request, "bikeQuantity", 0);
 		String siteSize= ParameterUtil.getStringParameter(request, "siteSize", "");
-		String position = ParameterUtil.getStringParameter(request, "position","");
+		String position = ParameterUtil.getStringParameter(request, "sitePosition","");
 		
 		TSiteDTO dto = new TSiteDTO();
 		dto.setUserId(userId);
+		dto.setName(name);
 		dto.setBikeQuantity(bikeQuantity);
 		dto.setSitePosition(position);
 		dto.setSiteSize(siteSize);
@@ -90,9 +100,10 @@ public class SiteAction extends BaseAction {
 	
 	public void modifySite() {
 		int id = ParameterUtil.getIntParameter(request, "id", 0);
+		String name = ParameterUtil.getStringParameter(request, "name", "");
 		int bikeQuantity= ParameterUtil.getIntParameter(request, "bikeQuantity", 0);
 		String siteSize= ParameterUtil.getStringParameter(request, "siteSize", "");
-		String position = ParameterUtil.getStringParameter(request, "position","");
+		String position = ParameterUtil.getStringParameter(request, "sitePosition","");
 
 		if (id <= 0) {
 			this.sendFailMsg("错误ID！");
@@ -108,7 +119,7 @@ public class SiteAction extends BaseAction {
 		dto.setBikeQuantity(bikeQuantity);
 		dto.setSitePosition(position);
 		dto.setSiteSize(siteSize);
-		dto.setCreateTime(new Date());
+		dto.setName(name);
 
 
 		boolean result = tSiteService.updateTSite(dto);

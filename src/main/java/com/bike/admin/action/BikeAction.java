@@ -31,9 +31,24 @@ public class BikeAction extends BaseAction{
 	public void bikeList() {
 		int start = ParameterUtil.getIntParameter(request, "start", 0);
 		int length = ParameterUtil.getIntParameter(request, "length", 20);
+		
+		int id = ParameterUtil.getIntParameter(request, "id", 0);
+		int userId = ParameterUtil.getIntParameter(request, "userId", 0);
+		int siteId = ParameterUtil.getIntParameter(request, "siteId", 0);
+		String bikeCode = ParameterUtil.getStringParameter(request, "bikeCode", "");
+		String color = ParameterUtil.getStringParameter(request, "color", "");
+		int status = ParameterUtil.getIntParameter(request, "status", -1000);
+		
+		TBikeDTO dto = new TBikeDTO();
+		dto.setId(id);
+		dto.setUserId(userId);
+		dto.setSiteId(siteId);
+		dto.setBikeCode(bikeCode);
+		dto.setColor(color);
+		dto.setStatus(status);
 
-		List<TBikeDTO> list = tBikeService.getPage(start, length);
-		int totalCount = tBikeService.getCount();
+		List<TBikeDTO> list = tBikeService.getList(dto, start, length);
+		int totalCount = tBikeService.getCount(dto);
 		JSONObject json = new JSONObject();
 		if (totalCount == 0) {
 			json.put("total", 0);
@@ -52,6 +67,7 @@ public class BikeAction extends BaseAction{
 		int userId = ParameterUtil.getIntParameter(request, "userId", 0);
 		int siteId = ParameterUtil.getIntParameter(request, "siteId", 0);
 		double bikeAmount = ParameterUtil.getDoubleParameter(request, "bikeAmount", 0);
+		String bikeCode = ParameterUtil.getStringParameter(request, "bikeCode", "");
 		String color = ParameterUtil.getStringParameter(request, "color", "黑");
 		String position = ParameterUtil.getStringParameter(request, "position", "二环西路");
 		String appearance = ParameterUtil.getStringParameter(request, "appearance", "新");
@@ -61,9 +77,10 @@ public class BikeAction extends BaseAction{
 		dto.setSiteId(siteId);
 		dto.setBikeAmount(bikeAmount);
 		dto.setColor(color);
+		dto.setBikeCode(bikeCode);
 		dto.setPosition(position);
 		dto.setAppearance(appearance);
-		dto.setStatu(2);
+		dto.setStatus(2);
 		dto.setCreateTime(new Date());
 
 		int result = tBikeService.saveTBike(dto);
@@ -77,8 +94,10 @@ public class BikeAction extends BaseAction{
 	
 	public void modifyBike() {
 		int id = ParameterUtil.getIntParameter(request, "id", 0);
+		int siteId = ParameterUtil.getIntParameter(request, "siteId", 0);
 		double bikeAmount = ParameterUtil.getDoubleParameter(request, "bikeAmount", 0);
 		String color = ParameterUtil.getStringParameter(request, "color", "");
+		String bikeCode = ParameterUtil.getStringParameter(request, "bikeCode", "");
 		String position = ParameterUtil.getStringParameter(request, "position", "");
 		String appearance = ParameterUtil.getStringParameter(request, "appearance", "");
 		
@@ -101,6 +120,8 @@ public class BikeAction extends BaseAction{
 		if(bikeAmount != 0){
 			dto.setBikeAmount(bikeAmount);
 		}
+		dto.setSiteId(siteId);
+		dto.setBikeCode(bikeCode);
 
 		boolean result = tBikeService.updateTBike(dto);
 

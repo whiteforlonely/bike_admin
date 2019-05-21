@@ -129,6 +129,14 @@ public  class TSiteServiceImpl implements  TSiteService {
     /*************************** get方法 ***********************************
      *                          请把get方法写在下面
      *************************************************************************/
+    @Override
+    public List<TSiteDTO> getList(TSiteDTO dto, int start, int length) {
+    	return DtoConvert.convertModelList2DtoList(tSiteDao.findList(DtoConvert.convertDto2Model(dto, TSiteModel.class), start, length), TSiteDTO.class);
+    }
     
+    @Override
+    public int getCount(TSiteDTO dto) {
+    	return tSiteDao.getCount(DtoConvert.convertDto2Model(dto, TSiteModel.class));
+    }
     
 }

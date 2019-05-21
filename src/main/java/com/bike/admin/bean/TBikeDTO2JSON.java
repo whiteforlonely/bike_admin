@@ -5,6 +5,7 @@ import net.sf.json.JsonConfig;
 import net.sf.json.processors.JsonBeanProcessor;
 
 import com.bike.admin.dto.TBikeDTO;
+import com.bike.admin.util.TimeUtils;
 
 public class TBikeDTO2JSON implements JsonBeanProcessor{
 	
@@ -15,17 +16,18 @@ public class TBikeDTO2JSON implements JsonBeanProcessor{
 	        TBikeDTO  dto = (TBikeDTO)bean;
 
 	         return new JSONObject()
+	         			.element("id", dto.getId())
 	                    .element("userId",dto.getUserId())
 	                    .element("siteId",dto.getSiteId())
 	                    .element("bikeCode",dto.getBikeCode())
 	                    .element("bikeAmount",dto.getBikeAmount())
 	                    .element("color",dto.getColor())
-	                    .element("status",dto.getStatu())
+	                    .element("status",dto.getStatus())
 	                    .element("position", dto.getPosition())
 	                    .element("appearance", dto.getAppearance())
-	                    .element("useTime", dto.getUseTime())
-	                    .element("endTime", dto.getEndTime())
-	                    .element("createTime", dto.getCreateTime())
+	                    .element("useTime", TimeUtils.dateToString(dto.getUseTime()))
+	                    .element("endTime", TimeUtils.dateToString(dto.getEndTime()))
+	                    .element("createTime", TimeUtils.dateToString(dto.getCreateTime()))
 	                    
 	         ;
 	    }

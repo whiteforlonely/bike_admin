@@ -1,25 +1,19 @@
 package com.bike.admin.dao.base;
 
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.sql.rowset.CachedRowSet;
-
-import org.apache.commons.lang.StringUtils;
+import java.util.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
-import com.bike.admin.model.TBikeModel;
-import com.constants.DatabaseConstants;
-import com.systemframework.dao.HqlQueryRule;
-import com.systemframework.util.Page;
-import com.systemframework.util.PageUtil;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import com.xstardl.xf.xchine_dbo_mysql.xsql.DBEngine;
 import com.xstardl.xf.xchine_dbo_mysql.xsql.DBFactory;
+import com.systemframework.util.Page;
+import com.systemframework.util.PageUtil;
+import com.systemframework.dao.HqlQueryRule;
+import  javax.sql.rowset.CachedRowSet;
+import  org.apache.commons.lang.StringUtils;
+import  com.constants.DatabaseConstants;
+import com.bike.admin.model.TBikeModel;
 
 /**
  * 这是t_bike的Dao实现类的基类
@@ -46,7 +40,7 @@ public  abstract class TBikeDaoBase {
     /**
      * 所有的字段,','隔开 
      */
-    protected static final String ALLCOL = " Id,UserId,SiteId,BikeCode,BikeAmount,Color,Statu,Position,Appearance,UseTime,EndTime,CreateTime ";
+    protected static final String ALLCOL = " Id,UserId,SiteId,BikeCode,BikeAmount,Color,Status,Position,Appearance,UseTime,EndTime,CreateTime ";
 
     protected static final String BASE_SQL = " SELECT " + ALLCOL + " FROM " + TABLE + " ";
 
@@ -84,8 +78,8 @@ public  abstract class TBikeDaoBase {
 						else if(StringUtils.equalsIgnoreCase("color",columnName)){
                				model.setColor(rs.getString(columnName));
 						}
-						else if(StringUtils.equalsIgnoreCase("statu",columnName)){
-							model.setStatu(rs.getInt(columnName));
+						else if(StringUtils.equalsIgnoreCase("status",columnName)){
+							model.setStatus(rs.getInt(columnName));
 						}
 						else if(StringUtils.equalsIgnoreCase("position",columnName)){
                				model.setPosition(rs.getString(columnName));
@@ -117,8 +111,8 @@ public  abstract class TBikeDaoBase {
      */
     public int insert(TBikeModel model) {
         DBEngine localEngine = DBFactory.getKeepConnectionDBEngine(DatabaseConstants.MAIN_DB_RW);
-        String sql = "INSERT INTO " + TABLE + " (UserId,SiteId,BikeCode,BikeAmount,Color,Statu,Position,Appearance,UseTime,EndTime,CreateTime) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
-        Object[]  paramObj = {model.getUserId(),model.getSiteId(),model.getBikeCode(),model.getBikeAmount(),model.getColor(),model.getStatu(),model.getPosition(),model.getAppearance(),model.getUseTime(),model.getEndTime(),model.getCreateTime()};
+        String sql = "INSERT INTO " + TABLE + " (UserId,SiteId,BikeCode,BikeAmount,Color,Status,Position,Appearance,UseTime,EndTime,CreateTime) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+        Object[]  paramObj = {model.getUserId(),model.getSiteId(),model.getBikeCode(),model.getBikeAmount(),model.getColor(),model.getStatus(),model.getPosition(),model.getAppearance(),model.getUseTime(),model.getEndTime(),model.getCreateTime()};
         int id=0;
         try {
              id = localEngine.executeUpdate(sql, paramObj);
@@ -140,8 +134,8 @@ public  abstract class TBikeDaoBase {
      * @return 修改成功返回true,否则返回false
      */
     public boolean update(TBikeModel model) {
-        String sql = "UPDATE  " + TABLE + " SET UserId = ? ,SiteId = ? ,BikeCode = ? ,BikeAmount = ? ,Color = ? ,Statu = ? ,Position = ? ,Appearance = ? ,UseTime = ? ,EndTime = ? ,CreateTime = ?  WHERE Id = ? ";
-        Object[]  paramObj = {model.getUserId(),model.getSiteId(),model.getBikeCode(),model.getBikeAmount(),model.getColor(),model.getStatu(),model.getPosition(),model.getAppearance(),model.getUseTime(),model.getEndTime(),model.getCreateTime(),model.getId()};
+        String sql = "UPDATE  " + TABLE + " SET UserId = ? ,SiteId = ? ,BikeCode = ? ,BikeAmount = ? ,Color = ? ,Status = ? ,Position = ? ,Appearance = ? ,UseTime = ? ,EndTime = ? ,CreateTime = ?  WHERE Id = ? ";
+        Object[]  paramObj = {model.getUserId(),model.getSiteId(),model.getBikeCode(),model.getBikeAmount(),model.getColor(),model.getStatus(),model.getPosition(),model.getAppearance(),model.getUseTime(),model.getEndTime(),model.getCreateTime(),model.getId()};
         try {
              return writeDBEngine.executeUpdate(sql, paramObj)>0;
         } catch(Exception e) {

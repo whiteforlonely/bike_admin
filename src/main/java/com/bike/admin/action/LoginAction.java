@@ -9,6 +9,7 @@ import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
 
 import com.bike.admin.bean.AdminUser2JSON;
+import com.bike.admin.bean.TUserInfoDTO2JSON;
 import com.bike.admin.dto.TAdminUserDTO;
 import com.bike.admin.dto.TUserInfoDTO;
 import com.bike.admin.service.TAdminUserService;
@@ -16,8 +17,6 @@ import com.bike.admin.service.TUserInfoService;
 import com.bike.admin.service.base.AdminServiceManager;
 import com.bike.admin.util.EncryUtil;
 import com.bike.admin.util.ParameterUtil;
-import com.framework.action.session.WebSessionManager;
-import com.framework.action.session.model.WebSessionUser;
 
 public class LoginAction extends BaseAction{
 
@@ -37,30 +36,32 @@ public class LoginAction extends BaseAction{
 		int loginType = ParameterUtil.getIntParameter(request, "loginType", 0);
 		int id = 0;
 		String userName = null;
+		TAdminUserDTO adminUserDTO = null;
+		TUserInfoDTO userDTO = null;
 		
 		if (loginType == 1) {
-			TAdminUserDTO dto = adminUserService.getByPhoneAndPwd(phone, EncryUtil.encode(password));
-			if (dto == null) {
+			adminUserDTO = adminUserService.getByPhoneAndPwd(phone, EncryUtil.encode(password));
+			if (adminUserDTO == null) {
 				this.sendFailMsg("用户名或密码错误");
 				return;
 			}
 			
-			if (dto.getStatus() == 1) {
+			if (adminUserDTO.getStatus() == 1) {
 				this.sendFailMsg("已被停用！");
 				return;
 			}
 			
-			id = dto.getId();
-			userName = dto.getNickname();
+			id = adminUserDTO.getId();
+			userName = adminUserDTO.getNickname();
 		} else if(loginType == 0){
-			TUserInfoDTO dto = tUserInfoService.getByPhoneAndPwd(phone, EncryUtil.encode(password));
-			if (dto == null) {
+			userDTO = tUserInfoService.getByPhoneAndPwd(phone, EncryUtil.encode(password));
+			if (userDTO == null) {
 				this.sendFailMsg("用户名或密码错误");
 				return;
 			}
 			
-			id = dto.getId();
-			userName = dto.getUserName();
+			id = userDTO.getId();
+			userName = userDTO.getUserName();
 		}
 		
 		request.getSession().setAttribute("uid", id);
@@ -68,11 +69,15 @@ public class LoginAction extends BaseAction{
 		request.getSession().setAttribute("userType", loginType);
 		
 		JsonConfig jsonConfig = new JsonConfig();
-		jsonConfig.registerJsonBeanProcessor(TAdminUserDTO.class, new AdminUser2JSON());
 		JSONObject json = new JSONObject();
 		json.put("result", "success");
-		json.put("userInfo", new JSONObject().element("userName", userName)
-				.element("userType", loginType));
+		if (loginType == 0) {
+			jsonConfig.registerJsonBeanProcessor(TUserInfoDTO.class, new TUserInfoDTO2JSON());
+			json.put("userInfo", JSONObject.fromObject(userDTO, jsonConfig));
+		}else {
+			jsonConfig.registerJsonBeanProcessor(TAdminUserDTO.class, new AdminUser2JSON());
+			json.put("userInfo", JSONObject.fromObject(adminUserDTO, jsonConfig));
+		}
 		this.sendResult(json.toString());
 	}
 	
@@ -106,16 +111,5 @@ public class LoginAction extends BaseAction{
 		
 		this.sendSuccess();
 	} 
-	
-	private void initSession(TAdminUserDTO dto){
-		WebSessionUser sessionUser = WebSessionManager.getSessionUser(request);
-		if (sessionUser == null) {
-			return;
-		}
-		
-		sessionUser.setUserName(dto.getNickname());
-		sessionUser.setPhone(dto.getMobilephone());
-		sessionUser.setUserId(dto.getId());
-	}
 
 }

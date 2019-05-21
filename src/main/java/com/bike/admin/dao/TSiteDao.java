@@ -1,9 +1,12 @@
 package com.bike.admin.dao;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.rowset.CachedRowSet;
+
+import org.apache.commons.lang.StringUtils;
 
 import com.bike.admin.dao.base.TSiteDaoBase;
 import com.bike.admin.model.TSiteModel;
@@ -91,5 +94,80 @@ public class TSiteDao extends TSiteDaoBase   {
 		
 		return 0;
  	}
+
+	public List<TSiteModel> findList(TSiteModel model, int start, int length) {
+		StringBuilder sqlBuilder = new StringBuilder("SELECT " + ALLCOL + " FROM " + TABLE + " WHERE 1=1");
+		List<Object> paramList = new ArrayList<Object>();
+		if (null != model) {
+			if (null != model.getId() && model.getId().intValue() > 0) {
+				sqlBuilder.append(" and id = ?");
+				paramList.add(model.getId());
+			}
+			if (null != model.getUserId() && model.getUserId().intValue()>0){
+				sqlBuilder.append(" and userId = ?");
+				paramList.add(model.getUserId());
+			}
+			if (StringUtils.isNotEmpty(model.getName())) {
+				sqlBuilder.append(" and name like ?");
+				paramList.add("%" + model.getName() + "%");
+			}
+		}
+		
+		sqlBuilder.append(" order by id desc limit ?, ?");
+		paramList.add(start);
+		paramList.add(length);
+		
+		Object[] paramObjects = new Object[paramList.size()];
+		for (int i = 0; i < paramObjects.length; i++) {
+			paramObjects[i] = paramList.get(i);
+		}
+		
+		return queryModelList(sqlBuilder.toString(), paramObjects);
+	}
+
+	@SuppressWarnings("deprecation")
+	public int getCount(TSiteModel model) {
+		StringBuilder sqlBuilder = new StringBuilder("SELECT count(1) FROM " + TABLE + " WHERE 1=1");
+		List<Object> paramList = new ArrayList<Object>();
+		if (null != model) {
+			if (null != model.getId() && model.getId().intValue() > 0) {
+				sqlBuilder.append(" and id = ?");
+				paramList.add(model.getId());
+			}
+			if (null != model.getUserId() && model.getUserId().intValue()>0){
+				sqlBuilder.append(" and userId = ?");
+				paramList.add(model.getUserId());
+			}
+			if (StringUtils.isNotEmpty(model.getName())) {
+				sqlBuilder.append(" and name like ?");
+				paramList.add("%" + model.getName() + "%");
+			}
+		}
+		
+		Object[] paramObjects = new Object[paramList.size()];
+		for (int i = 0; i < paramObjects.length; i++) {
+			paramObjects[i] = paramList.get(i);
+		}
+		
+		CachedRowSet rs = null;
+		try {
+			rs = writeDBEngine.executeQuery(sqlBuilder.toString(), paramObjects);
+			if (rs.next()) {
+				return rs.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (null != rs) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return 0;
+	}
     
 }

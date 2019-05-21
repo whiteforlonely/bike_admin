@@ -40,7 +40,7 @@ public  abstract class TUserInfoDaoBase {
     /**
      * 所有的字段,','隔开 
      */
-    protected static final String ALLCOL = " Id,UserType,UserSex,UserName,PhoneNum,Password,IdentityCard,Amount,CreateTime ";
+    protected static final String ALLCOL = " Id,UserType,Sex,UserName,PhoneNum,Password,IdentityCard,Address,Amount,CreateTime,Status ";
 
     protected static final String BASE_SQL = " SELECT " + ALLCOL + " FROM " + TABLE + " ";
 
@@ -66,8 +66,8 @@ public  abstract class TUserInfoDaoBase {
 						else if(StringUtils.equalsIgnoreCase("userType",columnName)){
 							model.setUserType(rs.getInt(columnName));
 						}
-						else if(StringUtils.equalsIgnoreCase("userSex",columnName)){
-							model.setUserSex(rs.getInt(columnName));
+						else if(StringUtils.equalsIgnoreCase("sex",columnName)){
+							model.setSex(rs.getInt(columnName));
 						}
 						else if(StringUtils.equalsIgnoreCase("userName",columnName)){
                				model.setUserName(rs.getString(columnName));
@@ -81,11 +81,17 @@ public  abstract class TUserInfoDaoBase {
 						else if(StringUtils.equalsIgnoreCase("identityCard",columnName)){
                				model.setIdentityCard(rs.getString(columnName));
 						}
+						else if(StringUtils.equalsIgnoreCase("address",columnName)){
+               				model.setAddress(rs.getString(columnName));
+						}
 						else if(StringUtils.equalsIgnoreCase("amount",columnName)){
                				model.setAmount(rs.getDouble(columnName));
 						}
 						else if(StringUtils.equalsIgnoreCase("createTime",columnName)){
                				model.setCreateTime(rs.getDate(columnName));
+						}
+						else if(StringUtils.equalsIgnoreCase("status",columnName)){
+							model.setStatus(rs.getInt(columnName));
 						}
 					}
 				}
@@ -102,8 +108,8 @@ public  abstract class TUserInfoDaoBase {
      */
     public int insert(TUserInfoModel model) {
         DBEngine localEngine = DBFactory.getKeepConnectionDBEngine(DatabaseConstants.MAIN_DB_RW);
-        String sql = "INSERT INTO " + TABLE + " (UserType,UserSex,UserName,PhoneNum,Password,IdentityCard,Amount,CreateTime) VALUES (?,?,?,?,?,?,?,?)";
-        Object[]  paramObj = {model.getUserType(),model.getUserSex(),model.getUserName(),model.getPhoneNum(),model.getPassword(),model.getIdentityCard(),model.getAmount(),model.getCreateTime()};
+        String sql = "INSERT INTO " + TABLE + " (UserType,Sex,UserName,PhoneNum,Password,IdentityCard,Address,Amount,CreateTime,Status) VALUES (?,?,?,?,?,?,?,?,?,?)";
+        Object[]  paramObj = {model.getUserType(),model.getSex(),model.getUserName(),model.getPhoneNum(),model.getPassword(),model.getIdentityCard(),model.getAddress(),model.getAmount(),model.getCreateTime(),model.getStatus()};
         int id=0;
         try {
              id = localEngine.executeUpdate(sql, paramObj);
@@ -125,8 +131,8 @@ public  abstract class TUserInfoDaoBase {
      * @return 修改成功返回true,否则返回false
      */
     public boolean update(TUserInfoModel model) {
-        String sql = "UPDATE  " + TABLE + " SET UserType = ? ,UserSex = ? ,UserName = ? ,PhoneNum = ? ,Password = ? ,IdentityCard = ? ,Amount = ? ,CreateTime = ?  WHERE Id = ? ";
-        Object[]  paramObj = {model.getUserType(),model.getUserSex(),model.getUserName(),model.getPhoneNum(),model.getPassword(),model.getIdentityCard(),model.getAmount(),model.getCreateTime(),model.getId()};
+        String sql = "UPDATE  " + TABLE + " SET UserType = ? ,Sex = ? ,UserName = ? ,PhoneNum = ? ,Password = ? ,IdentityCard = ? ,Address = ? ,Amount = ? ,CreateTime = ? ,Status = ?  WHERE Id = ? ";
+        Object[]  paramObj = {model.getUserType(),model.getSex(),model.getUserName(),model.getPhoneNum(),model.getPassword(),model.getIdentityCard(),model.getAddress(),model.getAmount(),model.getCreateTime(),model.getStatus(),model.getId()};
         try {
              return writeDBEngine.executeUpdate(sql, paramObj)>0;
         } catch(Exception e) {

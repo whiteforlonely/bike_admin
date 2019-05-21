@@ -140,5 +140,15 @@ public  class TUserInfoServiceImpl implements  TUserInfoService {
      *                          请把get方法写在下面
      *************************************************************************/
     
+    @Override
+    public List<TUserInfoDTO> getList(TUserInfoDTO dto, int start, int length,
+    		String startCreateTime, String endCreateTime) {
+    	return DtoConvert.convertModelList2DtoList(tUserInfoDao.findList(DtoConvert.convertDto2Model(dto, TUserInfoModel.class), start, length, startCreateTime, endCreateTime), TUserInfoDTO.class);
+    }
     
+    @Override
+    public int getCount(TUserInfoDTO dto, String startCreateTime,
+    		String endCreateTime) {
+    	return tUserInfoDao.getCount(DtoConvert.convertDto2Model(dto, TUserInfoModel.class), startCreateTime, endCreateTime);
+    }
 }

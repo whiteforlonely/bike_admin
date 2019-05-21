@@ -8,18 +8,6 @@
 		<result name="success" url="index.html"></result>
 	</action>
 	
-	
-	<!-- 会员管理  -->
-	<!-- <action id="/vip/user/list" class="com.bike.admin.action.VipUserManagerAction" method="getVipUserPage"></action>
-	<action id="/vip/user/detail" class="com.bike.admin.action.VipUserManagerAction" method="getVipUserDetailById"></action>
-	<action id="/vip/pay/detail" class="com.bike.admin.action.VipUserManagerAction" method="getPayDetail"></action>
-	<action id="/vip/user/del" class="com.bike.admin.action.VipUserManagerAction" method="deleteVipUser"></action>
-	<action id="/vip/user/forbid" class="com.bike.admin.action.VipUserManagerAction" method="forbidVipUser"></action>
-	<action id="/vip/user/release" class="com.bike.admin.action.VipUserManagerAction" method="releaseVipUser"></action>
-	<action id="/vip/user/updCertification" class="com.cp.admin.action.VipUserManagerAction" method="updCertification"></action>
- -->
-	<!-- excel导出数据  -->
-	
 	<!-- 用户管理 -->
 	<action id="/register" class="com.bike.admin.action.LoginAction" method="register"/>
 	<action id="/login" class="com.bike.admin.action.LoginAction" method="login"/>
