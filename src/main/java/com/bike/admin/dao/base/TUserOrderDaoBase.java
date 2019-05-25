@@ -40,7 +40,7 @@ public  abstract class TUserOrderDaoBase {
     /**
      * 所有的字段,','隔开 
      */
-    protected static final String ALLCOL = " Id,UseId,IssueId,BikeId,OrderCode,BetAmount,OrderStatus,CreateTime ";
+    protected static final String ALLCOL = " Id,UseId,IssueId,BikeId,OrderCode,OrderType,Amount,OrderStatus,CreateTime ";
 
     protected static final String BASE_SQL = " SELECT " + ALLCOL + " FROM " + TABLE + " ";
 
@@ -75,8 +75,11 @@ public  abstract class TUserOrderDaoBase {
 						else if(StringUtils.equalsIgnoreCase("orderCode",columnName)){
                				model.setOrderCode(rs.getString(columnName));
 						}
-						else if(StringUtils.equalsIgnoreCase("betAmount",columnName)){
-               				model.setBetAmount(rs.getDouble(columnName));
+						else if(StringUtils.equalsIgnoreCase("orderType",columnName)){
+							model.setOrderType(rs.getInt(columnName));
+						}
+						else if(StringUtils.equalsIgnoreCase("amount",columnName)){
+               				model.setAmount(rs.getDouble(columnName));
 						}
 						else if(StringUtils.equalsIgnoreCase("orderStatus",columnName)){
 							model.setOrderStatus(rs.getInt(columnName));
@@ -99,8 +102,8 @@ public  abstract class TUserOrderDaoBase {
      */
     public int insert(TUserOrderModel model) {
         DBEngine localEngine = DBFactory.getKeepConnectionDBEngine(DatabaseConstants.MAIN_DB_RW);
-        String sql = "INSERT INTO " + TABLE + " (UseId,IssueId,BikeId,OrderCode,BetAmount,OrderStatus,CreateTime) VALUES (?,?,?,?,?,?,?)";
-        Object[]  paramObj = {model.getUseId(),model.getIssueId(),model.getBikeId(),model.getOrderCode(),model.getBetAmount(),model.getOrderStatus(),model.getCreateTime()};
+        String sql = "INSERT INTO " + TABLE + " (UseId,IssueId,BikeId,OrderCode,OrderType,Amount,OrderStatus,CreateTime) VALUES (?,?,?,?,?,?,?,?)";
+        Object[]  paramObj = {model.getUseId(),model.getIssueId(),model.getBikeId(),model.getOrderCode(),model.getOrderType(),model.getAmount(),model.getOrderStatus(),model.getCreateTime()};
         int id=0;
         try {
              id = localEngine.executeUpdate(sql, paramObj);
@@ -122,8 +125,8 @@ public  abstract class TUserOrderDaoBase {
      * @return 修改成功返回true,否则返回false
      */
     public boolean update(TUserOrderModel model) {
-        String sql = "UPDATE  " + TABLE + " SET UseId = ? ,IssueId = ? ,BikeId = ? ,OrderCode = ? ,BetAmount = ? ,OrderStatus = ? ,CreateTime = ?  WHERE Id = ? ";
-        Object[]  paramObj = {model.getUseId(),model.getIssueId(),model.getBikeId(),model.getOrderCode(),model.getBetAmount(),model.getOrderStatus(),model.getCreateTime(),model.getId()};
+        String sql = "UPDATE  " + TABLE + " SET UseId = ? ,IssueId = ? ,BikeId = ? ,OrderCode = ? ,OrderType = ? ,Amount = ? ,OrderStatus = ? ,CreateTime = ?  WHERE Id = ? ";
+        Object[]  paramObj = {model.getUseId(),model.getIssueId(),model.getBikeId(),model.getOrderCode(),model.getOrderType(),model.getAmount(),model.getOrderStatus(),model.getCreateTime(),model.getId()};
         try {
              return writeDBEngine.executeUpdate(sql, paramObj)>0;
         } catch(Exception e) {

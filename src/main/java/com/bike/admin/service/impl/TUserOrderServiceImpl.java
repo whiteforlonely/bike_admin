@@ -116,5 +116,15 @@ public  class TUserOrderServiceImpl implements  TUserOrderService {
      *                          请把get方法写在下面
      *************************************************************************/
     
+    @Override
+    public List<TUserOrderDTO> getList(TUserOrderDTO searchDto, int start,
+    		int length, String createTimeStart, String createTimeEnd) {
+    	return DtoConvert.convertModelList2DtoList(tUserOrderDao.findList(DtoConvert.convertDto2Model(searchDto, TUserOrderModel.class), start, length, createTimeStart, createTimeEnd), TUserOrderDTO.class);
+    }
     
+    @Override
+    public int getCount(TUserOrderDTO searchDto, String createTimeStart,
+    		String createTimeEnd) {
+    	return tUserOrderDao.getCount(DtoConvert.convertDto2Model(searchDto, TUserOrderModel.class), createTimeStart, createTimeEnd);
+    }
 }

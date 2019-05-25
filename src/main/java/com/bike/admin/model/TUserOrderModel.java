@@ -35,13 +35,18 @@ public  class TUserOrderModel  implements Serializable {
      */
     private String orderCode = "";
     /**
+     * 属性:订单类型 0=购买；1=租赁；<br>
+     * 含义:订单类型 0=购买；1=租赁；<br>
+     */
+    private Integer orderType = 0;
+    /**
      * 属性:订单金额<br>
      * 含义:订单金额<br>
      */
-    private Double betAmount = 0.0;
+    private Double amount = 0.0;
     /**
-     * 属性:订单状态：5=下单失败；10=下单成功；<br>
-     * 含义:订单状态：5=下单失败；10=下单成功；<br>
+     * 属性:订单状态：0=新建订单；5=下单失败；10=下单成功；<br>
+     * 含义:订单状态：0=新建订单；5=下单失败；10=下单成功；<br>
      */
     private Integer orderStatus = 0;
     /**
@@ -147,12 +152,30 @@ public  class TUserOrderModel  implements Serializable {
     }
 
     /**
+     * 设置属性订单类型 0=购买；1=租赁；<br>
+     * 含义:订单类型 0=购买；1=租赁；<br>
+     * @param orderType 待设置的属性订单类型 0=购买；1=租赁；的值
+     */
+    public void setOrderType(Integer orderType) {
+        this.orderType = orderType;
+    }
+
+    /**
+     * 获取属性订单类型 0=购买；1=租赁；<br>
+     * 含义:订单类型 0=购买；1=租赁；<br>
+     * @return 属性订单类型 0=购买；1=租赁；的值
+     */
+    public Integer getOrderType() {
+        return orderType;
+    }
+
+    /**
      * 设置属性订单金额<br>
      * 含义:订单金额<br>
-     * @param betAmount 待设置的属性订单金额的值
+     * @param amount 待设置的属性订单金额的值
      */
-    public void setBetAmount(Double betAmount) {
-        this.betAmount = betAmount;
+    public void setAmount(Double amount) {
+        this.amount = amount;
     }
 
     /**
@@ -160,23 +183,23 @@ public  class TUserOrderModel  implements Serializable {
      * 含义:订单金额<br>
      * @return 属性订单金额的值
      */
-    public Double getBetAmount() {
-        return betAmount;
+    public Double getAmount() {
+        return amount;
     }
 
     /**
-     * 设置属性订单状态：5=下单失败；10=下单成功；<br>
-     * 含义:订单状态：5=下单失败；10=下单成功；<br>
-     * @param orderStatus 待设置的属性订单状态：5=下单失败；10=下单成功；的值
+     * 设置属性订单状态：0=新建订单；5=下单失败；10=下单成功；<br>
+     * 含义:订单状态：0=新建订单；5=下单失败；10=下单成功；<br>
+     * @param orderStatus 待设置的属性订单状态：0=新建订单；5=下单失败；10=下单成功；的值
      */
     public void setOrderStatus(Integer orderStatus) {
         this.orderStatus = orderStatus;
     }
 
     /**
-     * 获取属性订单状态：5=下单失败；10=下单成功；<br>
-     * 含义:订单状态：5=下单失败；10=下单成功；<br>
-     * @return 属性订单状态：5=下单失败；10=下单成功；的值
+     * 获取属性订单状态：0=新建订单；5=下单失败；10=下单成功；<br>
+     * 含义:订单状态：0=新建订单；5=下单失败；10=下单成功；<br>
+     * @return 属性订单状态：0=新建订单；5=下单失败；10=下单成功；的值
      */
     public Integer getOrderStatus() {
         return orderStatus;
@@ -244,7 +267,9 @@ public  class TUserOrderModel  implements Serializable {
         sb.append(",");
         sb.append("\"orderCode\":\""+this.getOrderCode()+"\"");
         sb.append(",");
-        sb.append("\"betAmount\":"+this.getBetAmount());
+        sb.append("\"orderType\":"+this.getOrderType());
+        sb.append(",");
+        sb.append("\"amount\":"+this.getAmount());
         sb.append(",");
         sb.append("\"orderStatus\":"+this.getOrderStatus());
         sb.append(",");

@@ -2,12 +2,11 @@ package com.bike.admin.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Random;
 
-public class SkuCodeUtils {
+public class CodeUtils {
 	
 	
-	public static synchronized String getCarNumber(String idStr){
+	public static synchronized String getNum(String idStr){
 		
 		try {
 			Thread.sleep(1);
@@ -19,15 +18,9 @@ public class SkuCodeUtils {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
         String today = formatter.format(new Date());
 		
-        Random random = new Random();
-		int s = random.nextInt(99) % (99 - 00 + 1) + 00;
-		String code = String.valueOf(s) ;
+		idStr = CodeUtils.fillString(idStr,"0",7);
 		
-		code = SkuCodeUtils.fillString(code,"0",2);
-		
-		idStr = SkuCodeUtils.fillString(idStr,"0",5);
-		
-		return today+idStr+code;
+		return today+idStr;
 	}
     
 	
@@ -48,7 +41,7 @@ public class SkuCodeUtils {
 		/*for (int i = 14; i < 69; i++) {
 			System.err.println("编号:"+SkuCodeUtils.getCarNumber(i+""));
 		}*/
-		System.err.println("编号:"+SkuCodeUtils.getCarNumber(15+""));
+		System.err.println("编号:"+CodeUtils.getNum(15+""));
 	
 	}
 	

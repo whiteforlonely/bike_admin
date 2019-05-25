@@ -1,8 +1,14 @@
 package com.bike.admin.service.impl;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javassist.runtime.DotClass;
 
 import com.bike.admin.dao.TBikeDao;
+import com.bike.admin.dao.TUserOrderDao;
 import com.bike.admin.dto.TBikeDTO;
 import com.bike.admin.model.TBikeModel;
 import com.bike.admin.service.TBikeService;
@@ -19,6 +25,7 @@ public  class TBikeServiceImpl implements  TBikeService {
      * 获得TBikeDao的实例
      */
     private static  TBikeDao  tBikeDao = TBikeDao.getInstance();
+    private static TUserOrderDao tUserOrderDao = TUserOrderDao.getInstance();
 
 
     /**
@@ -137,10 +144,34 @@ public  class TBikeServiceImpl implements  TBikeService {
     
     @Override
     public List<TBikeDTO> getList(TBikeDTO dto, int start, int length) {
-    	return DtoConvert.convertModelList2DtoList(tBikeDao.findList(DtoConvert.convertDto2Model(dto, TBikeModel.class), start, length), TBikeDTO.class); 
+    	List<TBikeDTO> list = DtoConvert.convertModelList2DtoList(tBikeDao.findList(DtoConvert.convertDto2Model(dto, TBikeModel.class), start, length), TBikeDTO.class);
+    	fillList(list);
+    	return list;
     }
     
-    @Override
+    private void fillList(List<TBikeDTO> list) {
+		if (list == null || list.size() <= 0) {
+			return;
+		}
+		
+		Set<Integer> bikeIds = new HashSet<Integer>();
+		for (int i = 0; i < list.size(); i++) {
+			bikeIds.add(list.get(i).getId());
+		}
+		
+		Map<Integer, Integer> orderIdMap = tUserOrderDao.getOrderIdsByBikeIds(bikeIds);
+		
+		for (TBikeDTO dto : list) {
+			Integer orderId = orderIdMap.get(dto.getId());
+			if (orderId == null) {
+				orderId = 0;
+			}
+			dto.setOrderId(orderId);
+		}
+	}
+
+
+	@Override
     public int getCount(TBikeDTO dto) {
     	return tBikeDao.getCount(DtoConvert.convertDto2Model(dto, TBikeModel.class));
     }

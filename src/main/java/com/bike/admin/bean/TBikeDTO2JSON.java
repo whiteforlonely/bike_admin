@@ -19,6 +19,7 @@ public class TBikeDTO2JSON implements JsonBeanProcessor{
 	         			.element("id", dto.getId())
 	                    .element("userId",dto.getUserId())
 	                    .element("siteId",dto.getSiteId())
+	                    .element("orderId", dto.getOrderId())
 	                    .element("bikeCode",dto.getBikeCode())
 	                    .element("bikeAmount",dto.getBikeAmount())
 	                    .element("color",dto.getColor())

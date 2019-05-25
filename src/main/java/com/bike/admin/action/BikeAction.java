@@ -12,13 +12,17 @@ import net.sf.json.JsonConfig;
 
 import com.bike.admin.bean.TBikeDTO2JSON;
 import com.bike.admin.dto.TBikeDTO;
+import com.bike.admin.dto.TUserOrderDTO;
 import com.bike.admin.service.TBikeService;
+import com.bike.admin.service.TUserOrderService;
 import com.bike.admin.service.base.AdminServiceManager;
+import com.bike.admin.util.CodeUtils;
 import com.bike.admin.util.ParameterUtil;
 
 public class BikeAction extends BaseAction{
 	
-	private TBikeService tBikeService = AdminServiceManager.getTBikeService();
+	private static TBikeService tBikeService = AdminServiceManager.getTBikeService();
+	private static TUserOrderService tUserOrderService = AdminServiceManager.getTUserOrderService();
 	
 	public BikeAction() {
 		super();
@@ -147,6 +151,42 @@ public class BikeAction extends BaseAction{
 			this.sendSuccessMsg("删除成功！");
 		} else {
 			this.sendFailMsg("删除失败！");
+		}
+	}
+	
+	// 发布订单
+	public void postOrder(){
+		int issueid = ParameterUtil.getIntParameter(request, "issueId", 0);
+		int bikeId = ParameterUtil.getIntParameter(request, "bikeId", 0);
+		int orderType = ParameterUtil.getIntParameter(request, "orderType", 0);
+		double amount = ParameterUtil.getDoubleParameter(request, "amount", 0.00);
+		
+		if (userType == 1) {
+			this.sendFailMsg("管理员无权限发布订单！");
+			return;
+		}
+		
+		TUserOrderDTO dto = new TUserOrderDTO();
+		dto.setIssueId(issueid);
+		dto.setBikeId(bikeId);
+		List<TUserOrderDTO> list = tUserOrderService.getList(dto, 0, 2, "", "");
+		if (null != list && list.size() > 0) {
+			this.sendFailMsg("已经有订单");
+			return;
+		}
+		dto.setOrderType(orderType);
+		dto.setOrderStatus(0);
+		dto.setCreateTime(new Date());
+		dto.setAmount(amount);
+		
+		int result = tUserOrderService.saveTUserOrder(dto);
+		if (result > 0) {
+			dto.setId(result);
+			dto.setOrderCode(CodeUtils.getNum(String.valueOf(result)));
+			tUserOrderService.updateTUserOrder(dto);
+			this.sendSuccess();
+		}else {
+			this.sendFailMsg("发布失败！");
 		}
 	}
 

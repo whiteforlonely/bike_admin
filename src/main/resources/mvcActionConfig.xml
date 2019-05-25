@@ -38,11 +38,12 @@
 	<action id="/bike/add" class="com.bike.admin.action.BikeAction" method="addBike"/>
 	<action id="/bike/update" class="com.bike.admin.action.BikeAction" method="modifyBike"/>
 	<action id="/bike/del" class="com.bike.admin.action.BikeAction" method="deleteBike"/>
+	<action id="/bike/order/post" class="com.bike.admin.action.BikeAction" method="postOrder"/>
 	
 	<!-- 用户订单管理 -->
-	<!-- <action id="/order/list" class="com.bike.admin.action.UserOrderAction" method="getOrderList"></action>
-	<action id="/order/del" class="com.bike.admin.action.UserOrderAction" method="deleteOrder"></action>
-	<action id="/order/recharge/pay" class="com.bike.admin.action.UserOrderAction" method="payOrder"></action> -->
+	<action id="/order/list" class="com.bike.admin.action.UserOrderAction" method="list"></action>
+	<action id="/order/del" class="com.bike.admin.action.UserOrderAction" method="delete"></action>
+	<action id="/order/update" class="com.bike.admin.action.UserOrderAction" method="update"></action>
 
 	
 </MvcHost>

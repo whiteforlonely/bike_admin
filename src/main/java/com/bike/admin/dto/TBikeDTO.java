@@ -10,10 +10,20 @@ import com.bike.admin.dto.base.TBikeDTOBase;
 public class TBikeDTO extends TBikeDTOBase implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    
+    private int orderId;
     /**
      *  默认构造方法,构造一个默认的TBikeDTO对象
      */
     public TBikeDTO() {
     }
+	public int getOrderId() {
+		return orderId;
+	}
+	public void setOrderId(int orderId) {
+		this.orderId = orderId;
+	}
+    
+    
 
 }

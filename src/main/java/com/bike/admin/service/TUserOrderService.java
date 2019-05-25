@@ -57,6 +57,8 @@ public  interface TUserOrderService  {
      */
     public Page<TUserOrderDTO> getTUserOrderPage(int pageSize, int pageNo);
 
+
+
     
     
     // *************************  手写代码区   ************************************ //
@@ -76,5 +78,11 @@ public  interface TUserOrderService  {
      *                          请把get方法写在下面
      *************************************************************************/
     
+    public List<TUserOrderDTO> getList(TUserOrderDTO searchDto, int start,
+    		int length, String createTimeStart, String createTimeEnd);
+
+
+	public int getCount(TUserOrderDTO searchDto, String createTimeStart,
+			String createTimeEnd);
     
 }
