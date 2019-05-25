@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
@@ -15,14 +14,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
 import org.apache.commons.lang.StringUtils;
 
-import com.bike.admin.util.CookieUtil;
-import com.bike.admin.util.EncryUtil;
 import com.framework.action.http.HttpClient;
+
+import net.sf.json.JSONObject;
 
 /**
  * 基础action
@@ -75,20 +71,6 @@ public abstract class BaseAction {
 	}
 
 	protected String initTab(){
-		Map<Long, Integer> dps = new HashMap<Long, Integer>();
-		Map<Long, Integer> rs = new HashMap<Long, Integer>();
-		
-		String authsStr = CookieUtil.getCookieValueByName(request, "auths");			
-		if(StringUtils.isNotBlank(authsStr)){
-			JSONArray authArray = JSONArray.fromObject(EncryUtil.decode(authsStr));
-			for(int i = 0 ; i < authArray.size(); i ++){
-				JSONObject json = (JSONObject) authArray.get(i);
-				dps.put(json.getLong("departmentId"), 1);
-				rs.put(json.getLong("roleId"), 1);
-			}
-		}
-		this.setInfoForRequest("dps", dps);
-		this.setInfoForRequest("rs", rs);
 		return "success";
 	}
 	/**
